@@ -19,15 +19,9 @@ std::string escapeRegex(const std::string &input) {
     return output;
 }
 
-int main(int argc, char *argv[]) {
-    // TODO multiple file inputs
-    if (argc != 2) {
-        std::cout << "Usage: bak <filename>" << std::endl;
-        return 1;
-    }
-
+void backup(const std::string &path) {
     // A final '/' would leave the filename empty.
-    fs::path original_file(argv[1]);
+    fs::path original_file(path);
     if (original_file.string().back() == '/') {
         original_file = original_file.parent_path();
     }
@@ -36,7 +30,7 @@ int main(int argc, char *argv[]) {
     if (!fs::exists(original_file)) {
         std::cout << "File '" << original_file.string() << "' does not exist."
                   << std::endl;
-        return 1;
+        return;
     }
 
     // Use current directory if nothing else is specified.
@@ -65,8 +59,22 @@ int main(int argc, char *argv[]) {
     fs::path new_file = dir.append(original_filename + "-" + oss.str() + ".bak");
 
     // Create backup.
+    std::string filetype = fs::is_directory(original_file) ? "Folder" : "File";
     fs::copy(original_file, new_file, fs::copy_options::recursive);
-    std::cout << "File was backed up as " << new_file.string() << std::endl;
+    std::cout << filetype << " '" << original_file.string() << "' was backed up as "
+              << new_file.string() << std::endl;
+}
+
+int main(int argc, char *argv[]) {
+    if (argc < 2) {
+        std::cout << "Usage: bak file1 [file2 ...]" << std::endl;
+        return 1;
+    }
+
+    // backup all given files
+    for (int i = 1; i < argc; ++i) {
+        backup(argv[i]);
+    }
 
     return 0;
 }
