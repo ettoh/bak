@@ -1,9 +1,9 @@
-#include <filesystem>
+#include "bak.h"
+
 #include <format>
 #include <iostream>
 #include <regex>
 #include <sstream>
-#include <string>
 #include <system_error>
 
 namespace fs = std::filesystem;
@@ -11,7 +11,7 @@ using std::string;
 
 // Transforms a string into a new string that is properly escaped to be used in
 // a regex.
-string escapeRegex(const string &input) {
+string Backup::escapeRegex(const string &input) {
   string output;
   for (char c : input) {
     if (c == '\\' || c == '.' || c == '*' || c == '+' || c == '?' || c == '|' ||
@@ -27,7 +27,8 @@ string escapeRegex(const string &input) {
 // Looks for all previous backups of a given file in a given directory. A backup
 // is a file in the form "ORIGINAL_FILENAME-N.bak", where N is the backup ID.
 // The largest backup ID is returned.
-int latestBackupID(const fs::path &dir, const string &original_filename) {
+int Backup::latestBackupID(const fs::path &dir,
+                           const string &original_filename) {
   // Find latest backup id.
   int latest_id = -1;  // later, +1 would yield 0
   for (auto const &file : fs::directory_iterator{dir}) {
@@ -44,7 +45,7 @@ int latestBackupID(const fs::path &dir, const string &original_filename) {
 }
 
 // Destination for the backup.
-fs::path getBackupPath(const fs::path &original_file) {
+fs::path Backup::getBackupPath(const fs::path &original_file) {
   // Extract base directory; use current directory if nothing else is specified.
   fs::path dir = original_file.parent_path();
   if (dir.empty()) {
@@ -62,7 +63,7 @@ fs::path getBackupPath(const fs::path &original_file) {
 // "ORIGINAL_FILENAME-N.bak", where N is the backup ID. The backup ID is
 // increased for each backup (that lives in the same folder). The new file
 // is stored in the same folder as the original file.
-void backup(const string &path) {
+void Backup::backup(const string &path) {
   // Later, path is split into directory and filename. If the user input ends
   // with '/', the filename would be empty. Therefore, remove an ending '/'.
   fs::path original_file(path);
@@ -89,23 +90,4 @@ void backup(const string &path) {
     std::cout << filetype << " '" << original_file.string()
               << "' was backed up as " << new_file.string() << std::endl;
   }
-}
-
-int main(int argc, char *argv[]) {
-  if (argc < 2) {
-    std::cout << "Usage: bak file1 [file2 ...]" << std::endl;
-    return 1;
-  }
-
-  if (string(argv[1]).compare("--version") == 0) {
-    std::cout << "bak version 1.0" << std::endl;
-    return 0;
-  }
-
-  // backup all given files
-  for (int i = 1; i < argc; ++i) {
-    backup(argv[i]);
-  }
-
-  return 0;
 }
