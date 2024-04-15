@@ -10,7 +10,7 @@ include_directories(include)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 # Add the executable
-add_executable(${target_cli_gantt} src/main.cc src/bak.cc)
+add_executable(${target_cli_gantt} src/main.cc src/backup.cc)
 target_compile_features(${target_cli_gantt} PRIVATE cxx_std_20)
 
 # Enable highest warning levels
