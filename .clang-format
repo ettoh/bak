@@ -9,10 +9,8 @@ BinPackParameters: false
 BreakConstructorInitializers: BeforeComma
 BreakInheritanceList: BeforeComma
 BreakStringLiterals: true
-ColumnLimit: 90
 FixNamespaceComments: true
-IndentWidth: 4
+IndentWidth: 2
 Language: Cpp
 PointerAlignment: Left
-TabWidth: 4
 UseTab: Never
