@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.20)
 
-project(Back VERSION 0.1)
+project(Back)
 set(target_cli_gantt "bak")
 
 # clangd

@@ -93,6 +93,11 @@ int main(int argc, char *argv[]) {
     return 1;
   }
 
+  if (string(argv[1]).compare("--version") == 0) {
+    std::cout << "bak version 1.0" << std::endl;
+    return 0;
+  }
+
   // backup all given files
   for (int i = 1; i < argc; ++i) {
     backup(argv[i]);
