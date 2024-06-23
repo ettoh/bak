@@ -7,6 +7,7 @@ Do you want to make changes to a file or a folder but want to keep a copy of the
 ## Prerequisites
 
 -   C++20 or above
+-   Compiler support for the `format` header (e.g. `GCC libstdc++` 13+)
 -   CMake
 
 ## Building

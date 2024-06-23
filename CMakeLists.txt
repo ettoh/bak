@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.20)
 
-project(Back)
+project(bak)
 set(executable_name "bak")
 
 # header files

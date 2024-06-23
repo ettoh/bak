@@ -54,7 +54,7 @@ fs::path Backup::getBackupPath(const fs::path &original_file) {
     }
 
     // new filename format: e.g. "directory/old_filename.oldtype-03.bak"
-    int latest_id = latestBackupID(dir, original_file.filename());
+    int latest_id = latestBackupID(dir, original_file.filename().string());
     fs::path new_file =
         dir.append(original_file.filename().string() + "-" +
                    std::format("{:02}", latest_id + 1) + ".bak");
