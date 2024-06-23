@@ -10,7 +10,7 @@ BreakConstructorInitializers: BeforeComma
 BreakInheritanceList: BeforeComma
 BreakStringLiterals: true
 FixNamespaceComments: true
-IndentWidth: 2
+IndentWidth: 4
 Language: Cpp
 PointerAlignment: Left
 UseTab: Never
