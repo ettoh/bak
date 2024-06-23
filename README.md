@@ -18,7 +18,8 @@ Compile the project using the steps below.
 cd /path/to/this/project
 
 # Ceate and change to the build directory
-mkcd build
+mkdir build
+cd build
 
 # Generate the build files
 cmake ../ -DCMAKE_BUILD_TYPE=Release
